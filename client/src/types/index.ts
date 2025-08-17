@@ -6,6 +6,21 @@ export interface Client {
   phone: string;
 }
 
+export const PROJECTSTATUS = {
+  new: "Not Started",
+  progress: "In Progress",
+  completed: "Completed",
+} as const;
+
+export interface Project {
+  id: string;
+  name: string;
+  status: (typeof PROJECTSTATUS)[keyof typeof PROJECTSTATUS];
+  clientId: string;
+  description: string;
+  client: Client;
+}
+
 export const clientSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.email({ message: "Invalid email address" }),

@@ -107,7 +107,7 @@ const mutation = new GraphQLObjectType({
         status: {
           type: GraphQLNonNull(
             new GraphQLEnumType({
-              name: "ProjectStatusUpdate",
+              name: "ProjectStatus",
               values: {
                 new: { value: "Not Started" },
                 progress: { value: "In Progress" },
@@ -120,6 +120,7 @@ const mutation = new GraphQLObjectType({
         clientId: { type: GraphQLNonNull(GraphQLID) },
       },
       resolve: (parent, args) => {
+        console.log("adding to project victor");
         const project = new ProjectModel({
           name: args.name,
           description: args.description,
@@ -148,7 +149,7 @@ const mutation = new GraphQLObjectType({
         status: {
           type: GraphQLNonNull(
             new GraphQLEnumType({
-              name: "ProjectStatus",
+              name: "ProjectStatusUpdate",
               values: {
                 new: { value: "Not Started" },
                 progress: { value: "In Progress" },

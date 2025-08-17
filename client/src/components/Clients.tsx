@@ -7,8 +7,11 @@ import { DELETE_CLIENT } from "../mutations/clientMutation";
 import { createPortal } from "react-dom";
 import { useState } from "react";
 import AddClientModal from "./AddClientModal";
+import Projects from "./Projects";
+import AddProjectModal from "./AddProjectModal";
 const Clients = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const { loading, error, data } = useQuery(GET_CLIENTS);
   const [deleteClient] = useMutation(DELETE_CLIENT);
 
@@ -43,15 +46,22 @@ const Clients = () => {
   return (
     <div>
       <section>
-        <div className="flex justify-between items-center mb-4 mt-4">
-          <h2 className="text-2xl font-bold mb-4 text-gray-500">Clients</h2>
+        <div className="flex gap-4 items-center mb-4 mt-4">
+          <button
+            onClick={() => setIsProjectModalOpen(true)}
+            className="bg-red-300 hover:bg-red-400 text-white px-4 py-2 rounded cursor-pointer"
+          >
+            New Project
+          </button>
           <button
             onClick={() => setIsModalOpen(true)}
-            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded cursor-pointer"
           >
             Add Client
           </button>
         </div>
+        <Projects />
+        <hr className="my-4" />
         <div className="overflow-x-auto rounded-lg shadow border border-gray-200">
           <table className="min-w-full bg-white">
             <thead className="bg-gray-50">
@@ -106,6 +116,11 @@ const Clients = () => {
         {isModalOpen &&
           createPortal(
             <AddClientModal toggleModal={setIsModalOpen} />,
+            document.body
+          )}
+        {isProjectModalOpen &&
+          createPortal(
+            <AddProjectModal toggleModal={setIsProjectModalOpen} />,
             document.body
           )}
       </section>
